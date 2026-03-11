@@ -1,0 +1,53 @@
+{
+  "name": "perpus-frontend",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "lint": "eslint .",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@headlessui/react": "^2.2.9",
+    "@iconify/icons-fa": "^1.2.3",
+    "@iconify/icons-feather": "^1.2.3",
+    "@iconify/icons-heroicons": "^1.2.9",
+    "@iconify/icons-ic": "^1.2.13",
+    "@iconify/icons-mdi": "^1.2.48",
+    "@iconify/react": "^6.0.2",
+    "@tanstack/react-query": "^5.90.21",
+    "axios": "^1.13.6",
+    "chart.js": "^4.5.1",
+    "flowbite": "^4.0.1",
+    "flyonui": "^2.4.1",
+    "lucide-react": "^0.577.0",
+    "react": "^19.2.4",
+    "react-chartjs-2": "^5.3.1",
+    "react-dom": "^19.2.4",
+    "react-hook-form": "^7.71.2",
+    "react-hot-toast": "^2.6.0",
+    "react-icons": "^5.6.0",
+    "react-router-dom": "^7.13.1",
+    "recharts": "^3.8.0",
+    "tw-elements-react": "^1.0.0-alpha-end"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.39.1",
+    "@tailwindcss/forms": "^0.5.11",
+    "@tailwindcss/vite": "^4.2.1",
+    "@types/react": "^19.2.7",
+    "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react": "^5.1.4",
+    "autoprefixer": "^10.4.27",
+    "daisyui": "^5.5.19",
+    "eslint": "^9.39.1",
+    "eslint-plugin-react-hooks": "^7.0.1",
+    "eslint-plugin-react-refresh": "^0.4.24",
+    "globals": "^16.5.0",
+    "postcss": "^8.5.8",
+    "tailwindcss": "^4.2.1",
+    "vite": "^7.3.1"
+  }
+}
