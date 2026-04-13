@@ -15,3 +15,7 @@ export const getMe = () => {
 export const registerUser = (data) => {
   return api.post(`/register`, data);
 };
+
+export const getMembers = () => {
+  return api.get("/members");
+};

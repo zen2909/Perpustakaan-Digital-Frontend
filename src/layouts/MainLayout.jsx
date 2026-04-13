@@ -8,23 +8,24 @@ export default function MainLayout() {
   const location = useLocation();
   const [user, setUser] = useState("");
 
-  // Mapping title berdasarkan path
   const getTitle = () => {
-    switch (location.pathname) {
-      case "/dashboard":
-        return "Dashboard";
-      case "/authors":
+    const pathname = location.pathname;
+
+    switch (true) {
+      case pathname.startsWith("/authors"):
         return "Authors Management";
-      case "/books":
+      case pathname.startsWith("/books"):
         return "Books Management";
-      case "/categories":
+      case pathname.startsWith("/categories"):
         return "Categories Management";
-      case "/loans":
+      case pathname.startsWith("/loans"):
         return "Loans Management";
-      case "/logs":
-        return "System Logs";
+      case pathname === "/logs":
+        return "Logs Management";
+      case pathname === "/dashboard":
+        return "Dashboard";
       default:
-        return "Page Title";
+        return {};
     }
   };
 
@@ -48,7 +49,7 @@ export default function MainLayout() {
       <div className="drawer-content">
         <Navbar title={getTitle()} />
 
-        <div className="py-6 px-6 bg-sky-50">
+        <div className="py-6 px-6 bg-sky-50 min-h-screen">
           <Outlet />
         </div>
       </div>

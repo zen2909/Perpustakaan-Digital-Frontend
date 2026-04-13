@@ -1,5 +1,5 @@
 import { cardConfig } from "../../config/statCard";
-export default function StatCard({ type }) {
+export default function StatCard({ type, value }) {
   const config = cardConfig[type];
 
   const Icon = config.icon;
@@ -17,11 +17,11 @@ export default function StatCard({ type }) {
                   <Icon className={`w-10 h-10 ${config.iconcolor}`} />
                 </div>
               </div>
-              <span className="flex items-center justify-center text-3xl font-jakarta text-slate-500">
-                5
+              <span className="flex items-center justify-center text-3xl font-jakarta text-slate-700 mt-1">
+                {value}
               </span>
             </div>
-            <div className="flex items-center justify-center text-xl font-jakarta text-gray-500">
+            <div className="flex items-center justify-center text-xl font-jakarta text-slate-500">
               {config.label}
             </div>
           </div>

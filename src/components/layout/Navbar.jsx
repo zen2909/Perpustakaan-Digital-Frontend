@@ -10,7 +10,7 @@ export default function Navbar({ title }) {
         {/* Sidebar toggle icon */}
         <GoSidebarCollapse className="w-4 h-4 my-1.5 inline-block" />
       </label>
-      <div className="px-4">{title}</div>
+      <div className="px-4 font-popins font-semibold text-xl">{title}</div>
     </nav>
   );
 }

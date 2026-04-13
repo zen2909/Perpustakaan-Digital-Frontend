@@ -1,17 +1,40 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 import { getAuthors, deleteAuthor } from "../../services/authorService";
-
+import TableData from "../../components/table/TableData";
+import ButtonUi from "../../components/ui/ButtonUi";
 function Authors() {
   const [authors, setAuthors] = useState([]);
+  const [loading, setLoading] = useState(true);
 
+  const authorColumns = [
+    { key: "index", type: "text", label: "No" },
+    { key: "name", type: "text", label: "Name" },
+    { key: "photo", type: "image", label: "Photo" },
+    { key: "biography", type: "bio", label: "Biography" },
+    { key: "nationality", type: "text", label: "Nationality" },
+    { key: "birth_year", type: "text", label: "Birth Year" },
+  ];
+
+  const buttonData = [
+    {
+      type: "edit",
+      route: "/authors/edit/:id",
+    },
+    {
+      type: "delete",
+      onClick: (id) => handleDelete(id),
+    },
+  ];
   const fetchAuthors = async () => {
+    setLoading(true);
     try {
       const response = await getAuthors();
-
+      console.log("authors response:", response.data.data[0]);
       setAuthors(response.data.data);
     } catch (error) {
       console.error(error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -29,51 +52,15 @@ function Authors() {
 
   return (
     <div className="p-6">
-      <div className="flex justify-between mb-4">
-        <h1 className="text-2xl font-bold">Authors</h1>
-
-        <Link
-          to="/authors/create"
-          className="bg-blue-500 text-white px-4 py-2 rounded"
-        >
-          Add Author
-        </Link>
+      <div className="flex justify-end p-4">
+        <ButtonUi type="create" route="/authors/create" label="Add Author" />
       </div>
-
-      <table className="w-full border">
-        <thead>
-          <tr className="bg-gray-200">
-            <th className="p-2">ID</th>
-            <th className="p-2">Name</th>
-            <th className="p-2">Action</th>
-          </tr>
-        </thead>
-
-        <tbody>
-          {authors.map((author) => (
-            <tr key={author.id} className="border-t">
-              <td className="p-2">{author.id}</td>
-              <td className="p-2">{author.name}</td>
-
-              <td className="p-2 flex gap-2">
-                <Link
-                  to={`/authors/edit/${author.id}`}
-                  className="bg-yellow-400 px-3 py-1 rounded"
-                >
-                  Edit
-                </Link>
-
-                <button
-                  onClick={() => handleDelete(author.id)}
-                  className="bg-red-500 text-white px-3 py-1 rounded"
-                >
-                  Delete
-                </button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+      <TableData
+        data={authorColumns}
+        values={authors}
+        buttons={buttonData}
+        loading={loading}
+      />
     </div>
   );
 }
