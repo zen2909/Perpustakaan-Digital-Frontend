@@ -3,23 +3,96 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&family=Inter:wght@400;500;600&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap');
 
 @import "tailwindcss";
-@plugin "daisyui";
+/* @plugin "daisyui"; */
 @plugin "@tailwindcss/forms";
-@source "../node_modules/flowbite";
+/* @source "../node_modules/flowbite";
 @source "./node_modules/flyonui/flyonui.js";
 @import "flyonui/variants.css";
 @import 'tw-elements-react/dist/css/tw-elements-react.min.css';
-@import "tailwindcss";
 @source "../node_modules/flyonui/dist";
-@source "../node_modules/flowbite";
+@source "../node_modules/flowbite"; */
 
+/* Tema custom sesuai desain */
 @theme {
-  --font-inter: 'Inter', sans-serif;
+  /* Fonts */
+  --font-headline: 'Manrope', sans-serif;
+  --font-body: 'Inter', sans-serif;
+  --font-label: 'Inter', sans-serif;
+   --font-inter: 'Inter', sans-serif;
   --font-poppins: 'Poppins', sans-serif;
   --font-jakarta: 'Plus Jakarta Sans', sans-serif;
   --font-montserrat: 'Montserrat', sans-serif;
   --font-sans: 'DM Sans', sans-serif;
+}
+@theme {
+  /* Warna - Surface */
+  --color-surface: #f7faf8;
+  --color-surface-container-lowest: #ffffff;
+  --color-surface-container-low: #f1f4f3;
+  --color-surface-container: #ebefed;
+  --color-surface-container-high: #e5e9e7;
+  --color-surface-container-highest: #e0e3e1;
+  --color-on-surface: #181c1c;
+  --color-on-surface-variant: #3e4947;
 
+  /* Warna - Primary */
+  --color-primary: #005c55;
+  --color-primary-container: #0f766e;
+  --color-on-primary: #ffffff;
+  --color-on-primary-container: #a3faef;
+  --color-primary-fixed: #9cf2e8;
+  --color-primary-fixed-dim: #80d5cb;
+
+  /* Warna - Secondary */
+  --color-secondary: #466460;
+  --color-secondary-container: #c5e6e1;
+  --color-on-secondary: #ffffff;
+  --color-on-secondary-container: #4a6864;
+  --color-secondary-fixed: #c8e9e4;
+  --color-secondary-fixed-dim: #accdc8;
+
+  /* Warna - Tertiary */
+  --color-tertiary: #7f4025;
+  --color-tertiary-container: #9c573a;
+  --color-on-tertiary: #ffffff;
+  --color-on-tertiary-container: #ffe5db;
+
+  /* Warna - Error */
+  --color-error: #ba1a1a;
+  --color-error-container: #ffdad6;
+  --color-on-error: #ffffff;
+  --color-on-error-container: #93000a;
+
+  /* Warna - Outline & Lainnya */
+  --color-outline: #6e7977;
+  --color-outline-variant: #bdc9c6;
+  --color-background: #f7faf8;
+  --color-inverse-surface: #2d3130;
+  --color-inverse-on-surface: #eef1f0;
+  --color-inverse-primary: #80d5cb;
+  --color-surface-tint: #006a63;
+
+  /* Border radius */
+  --radius-default: 0.25rem;
+  --radius-lg: 0.5rem;
+  --radius-xl: 0.75rem;
+  --radius-full: 9999px;
+}
+
+/* Plugin tambahan (jika perlu) */
+@plugin "@tailwindcss/forms";
+
+/* Custom component classes */
+@layer components {
+  .archival-gradient {
+    background: linear-gradient(135deg, #005c55 0%, #0f766e 100%);
+  }
+}
+
+/* Reset focus outline untuk input */
+input:focus {
+  outline: none;
 }

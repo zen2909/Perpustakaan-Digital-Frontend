@@ -3,7 +3,7 @@ import { Routes, Route } from "react-router-dom";
 import Authors from "../pages/authors/Authors";
 import CreateAuthor from "../pages/authors/CreateAuthor";
 import EditAuthor from "../pages/authors/EditAuthor";
-import Login from "../pages/auth/Login";
+import LoginPage from "../pages/auth/LoginPage";
 import Register from "../pages/auth/Register";
 import Dashboard from "../pages/dashboard/Dashboard";
 import Layout from "../layouts/MainLayout";
@@ -18,7 +18,7 @@ import Loans from "../pages/loans/Loans";
 function AppRoutes() {
   return (
     <Routes>
-      <Route path="/" element={<Login />} />
+      <Route path="/" element={<LoginPage />} />
 
       <Route path="/register" element={<Register />} />
 

@@ -16,6 +16,7 @@ export default {
     require("flowbite/plugin"),
     require("tw-elements-react/dist/plugin.cjs"),
     require("daisyui"),
+    require("@tailwindcss/forms"),
   ],
   darkMode: "class", // atau 'media' jika ingin berdasarkan sistem
 };
