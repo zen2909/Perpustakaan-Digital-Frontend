@@ -1,33 +1,14 @@
-import { Outlet, useLocation } from "react-router-dom";
-import Navbar from "../components/layout/Navbar";
+// src/layouts/MainLayout.jsx
+import { Outlet } from "react-router-dom";
+import Header from "../components/layout/Header";
 import Sidebar from "../components/layout/Sidebar";
 import { useState, useEffect } from "react";
 import { getMe } from "../services/authService";
 
 export default function MainLayout() {
-  const location = useLocation();
-  const [user, setUser] = useState("");
-
-  const getTitle = () => {
-    const pathname = location.pathname;
-
-    switch (true) {
-      case pathname.startsWith("/authors"):
-        return "Authors Management";
-      case pathname.startsWith("/books"):
-        return "Books Management";
-      case pathname.startsWith("/categories"):
-        return "Categories Management";
-      case pathname.startsWith("/loans"):
-        return "Loans Management";
-      case pathname === "/logs":
-        return "Logs Management";
-      case pathname === "/dashboard":
-        return "Dashboard";
-      default:
-        return {};
-    }
-  };
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   useEffect(() => {
     fetchUser();
@@ -39,28 +20,49 @@ export default function MainLayout() {
       setUser(response.data);
     } catch (error) {
       console.error(error);
+    } finally {
+      setLoading(false);
     }
   };
 
+  const closeSidebar = () => setSidebarOpen(false);
+  const openSidebar = () => setSidebarOpen(true);
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen bg-surface">
+        <div className="w-8 h-8 border-4 border-primary/20 border-t-primary rounded-full animate-spin"></div>
+      </div>
+    );
+  }
+
   return (
-    <div className="drawer lg:drawer-open">
-      <input id="my-drawer-4" type="checkbox" className="drawer-toggle" />
-
-      <div className="drawer-content">
-        <Navbar title={getTitle()} />
-
-        <div className="py-6 px-6 bg-sky-50 min-h-screen">
-          <Outlet />
-        </div>
+    <div className="flex h-screen bg-surface overflow-hidden">
+      {/* Sidebar - hidden di mobile & tablet, hanya tampil saat sidebarOpen true */}
+      <div
+        className={`
+          fixed inset-y-0 left-0 z-50 transform transition-transform duration-300 ease-in-out
+          lg:relative lg:translate-x-0 lg:z-auto lg:block
+          ${sidebarOpen ? "translate-x-0" : "-translate-x-full"}
+        `}
+      >
+        <Sidebar role={user?.role} onClose={closeSidebar} />
       </div>
 
-      <div className="drawer-side is-drawer-close:overflow-visible overflow-visible">
-        <label
-          htmlFor="my-drawer-4"
-          aria-label="close sidebar"
-          className="drawer-overlay"
-        ></label>
-        {user && <Sidebar username={user.name} email={user.email} />}
+      {/* Overlay untuk mobile & tablet */}
+      {sidebarOpen && (
+        <div
+          className="fixed inset-0 bg-black/50 z-40 lg:hidden"
+          onClick={closeSidebar}
+        />
+      )}
+
+      {/* Main content */}
+      <div className="flex-1 flex flex-col overflow-hidden">
+        <Header user={user} onMenuClick={openSidebar} />
+        <main className="flex-1 overflow-y-auto p-4 md:p-6">
+          <Outlet />
+        </main>
       </div>
     </div>
   );

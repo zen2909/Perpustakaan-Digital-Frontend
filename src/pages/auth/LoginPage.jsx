@@ -21,9 +21,10 @@ const LoginPage = () => {
     setLoading(true);
     try {
       const response = await login({ email, password });
-      const user = response.data.user || response.data;
+      const { token, user } = response.data;
+      localStorage.setItem("token", token);
       const role = user.role;
-      if (role === "admin") navigate("/dashboard");
+      if (role === "admin") navigate("/admin/dashboard");
       else if (role === "librarian") navigate("/librarian/dashboard");
       else navigate("/member/dashboard");
     } catch (err) {
