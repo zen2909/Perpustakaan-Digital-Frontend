@@ -1,6 +1,6 @@
 import api from "./api";
 
-const FILE_BASE_URL = "http://localhost:8000";
+const FILE_BASE_URL = "http://192.168.1.16:8000";
 
 export const getAuthors = () => {
   return api.get("/authors");

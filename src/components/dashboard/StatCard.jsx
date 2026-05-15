@@ -1,32 +1,30 @@
-import { cardConfig } from "../../config/statCard";
-export default function StatCard({ type, value }) {
-  const config = cardConfig[type];
+import React from "react";
 
-  const Icon = config.icon;
-
+const StatCard = ({
+  icon,
+  label,
+  value,
+  subText,
+  subTextColor = "primary",
+}) => {
   return (
-    <>
-      <div className="flex flex-col items-center justify-center w-full mx-auto rounded-xl">
-        <div className="w-full h-44 bg-white bg-center object-cover rounded-lg border border-gray-300 shadow-sm">
-          <div className="flex flex-col h-full gap-1">
-            <div className="grid-grid-rows-2">
-              <div className="flex items-end justify-center mt-6">
-                <div
-                  className={`flex justify-center items-center w-16 h-16 rounded-xl ${config.bgcolor}`}
-                >
-                  <Icon className={`w-10 h-10 ${config.iconcolor}`} />
-                </div>
-              </div>
-              <span className="flex items-center justify-center text-3xl font-jakarta text-slate-700 mt-1">
-                {value}
-              </span>
-            </div>
-            <div className="flex items-center justify-center text-xl font-jakarta text-slate-500">
-              {config.label}
-            </div>
-          </div>
-        </div>
+    <div className="bg-surface-container-lowest p-6 rounded-xl relative overflow-hidden group">
+      <span className="material-symbols-outlined absolute -top-2 -right-2 text-6xl text-primary/5 group-hover:text-primary/10 transition-colors">
+        {icon}
+      </span>
+      <span className="font-label text-[10px] tracking-widest uppercase font-bold text-on-surface-variant block mb-1">
+        {label}
+      </span>
+      <div className="flex items-baseline gap-2">
+        <span className="text-4xl font-extrabold font-headline text-primary">
+          {value}
+        </span>
+        <span className={`text-xs font-bold text-${subTextColor}`}>
+          {subText}
+        </span>
       </div>
-    </>
+    </div>
   );
-}
+};
+
+export default StatCard;

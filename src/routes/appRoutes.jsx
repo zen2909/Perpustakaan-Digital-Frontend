@@ -1,19 +1,30 @@
+import { lazy, Suspense } from "react";
 import { Routes, Route } from "react-router-dom";
+import PageLoader from "../components/ui/PageLoader";
 
-import Authors from "../pages/authors/Authors";
-import CreateAuthor from "../pages/authors/CreateAuthor";
-import EditAuthor from "../pages/authors/EditAuthor";
 import LoginPage from "../pages/auth/LoginPage";
 import Register from "../pages/auth/Register";
-import Dashboard from "../pages/dashboard/Dashboard";
-import Layout from "../layouts/MainLayout";
-import Books from "../pages/books/Books";
-import CreateBook from "../pages/books/CreateBook";
-import EditBook from "../pages/books/EditBook";
-import Categories from "../pages/categories/Categories";
-import CreateCategories from "../pages/categories/CreateCategories";
-import EditCategories from "../pages/categories/EditCategories";
-import Loans from "../pages/loans/Loans";
+
+// Lazy load untuk halaman lainnya
+const AdminDashboard = lazy(() => import("../pages/dashboard/AdminDashboard"));
+const MemberDashboard = lazy(
+  () => import("../pages/dashboard/MemberDashboard"),
+);
+const Authors = lazy(() => import("../pages/authors/Authors"));
+// const CreateAuthor = lazy(() => import("../pages/authors/CreateAuthor"));
+// const EditAuthor = lazy(() => import("../pages/authors/EditAuthor"));
+const Books = lazy(() => import("../pages/books/Books"));
+const Catalog = lazy(() => import("../pages/books/Catalog"));
+// const CreateBook = lazy(() => import("../pages/books/CreateBook"));
+// const EditBook = lazy(() => import("../pages/books/EditBook"));
+const Categories = lazy(() => import("../pages/categories/Categories"));
+// const CreateCategories = lazy(
+//   () => import("../pages/categories/CreateCategories"),
+// );
+// const EditCategories = lazy(() => import("../pages/categories/EditCategories"));
+const Loans = lazy(() => import("../pages/loans/Loans"));
+const MyLoans = lazy(() => import("../pages/loans/MyLoans"));
+const MainLayout = lazy(() => import("../layouts/MainLayout"));
 
 function AppRoutes() {
   return (
@@ -22,22 +33,24 @@ function AppRoutes() {
 
       <Route path="/register" element={<Register />} />
 
-      <Route element={<Layout />}>
-        <Route path="/dashboard" element={<Dashboard />} />
-
+      <Route element={<MainLayout />}>
+        <Route path="/admin/dashboard" element={<AdminDashboard />} />
+        <Route path="/member/dashboard" element={<MemberDashboard />} />
         <Route path="/authors" element={<Authors />} />
-        <Route path="/authors/create" element={<CreateAuthor />} />
-        <Route path="/authors/edit/:id" element={<EditAuthor />} />
+        {/* <Route path="/authors/create" element={<CreateAuthor />} />
+          <Route path="/authors/edit/:id" element={<EditAuthor />} /> */}
 
         <Route path="/books" element={<Books />} />
-        <Route path="/books/create" element={<CreateBook />} />
-        <Route path="/books/edit/:slug" element={<EditBook />} />
+        <Route path="/catalog" element={<Catalog />} />
+        {/* <Route path="/books/create" element={<CreateBook />} />
+          <Route path="/books/edit/:slug" element={<EditBook />} /> */}
 
         <Route path="/categories" element={<Categories />} />
-        <Route path="/categories/create" element={<CreateCategories />} />
-        <Route path="/categories/edit/:slug" element={<EditCategories />} />
+        {/* <Route path="/categories/create" element={<CreateCategories />} />
+          <Route path="/categories/edit/:slug" element={<EditCategories />} /> */}
 
         <Route path="/loans" element={<Loans />} />
+        <Route path="/my-loans" element={<MyLoans />} />
         <Route path="/logs" element={<h1>Logs</h1>} />
       </Route>
     </Routes>

@@ -1,63 +1,153 @@
-import { useNavigate, useLocation } from "react-router-dom";
-import { Book } from "lucide-react";
-import { AiOutlineHome } from "react-icons/ai";
-import { MdOutlinePerson, MdOutlineLibraryAdd } from "react-icons/md";
-import { TbCategoryPlus, TbLogs } from "react-icons/tb";
+// src/components/layout/Sidebar.jsx
+import React from "react";
+import { NavLink, useNavigate } from "react-router-dom";
+import {
+  MdOutlineDashboard,
+  MdOutlineLibraryBooks,
+  MdOutlineCategory,
+  MdOutlineHistoryEdu,
+  MdOutlineBook,
+  MdListAlt,
+  MdOutlineBookmark,
+  MdOutlinePerson,
+  MdOutlineLogout,
+  MdClose,
+} from "react-icons/md";
+import { logout } from "../../services/authService";
 
-export default function Sidebar({ username, email }) {
+const Sidebar = ({ role, onClose }) => {
   const navigate = useNavigate();
-  const location = useLocation();
 
-  const pages = [
-    { path: "/dashboard", icon: AiOutlineHome, label: "Dashboard" },
-    { path: "/authors", icon: MdOutlinePerson, label: "Authors" },
-    { path: "/books", icon: Book, label: "Books" },
-    { path: "/categories", icon: TbCategoryPlus, label: "Categories" },
-    { path: "/loans", icon: MdOutlineLibraryAdd, label: "Loans" },
-    { path: "/logs", icon: TbLogs, label: "Logs" },
+  const handleLogout = async () => {
+    try {
+      await logout();
+      localStorage.removeItem("token");
+      navigate("/");
+    } catch (error) {
+      console.error("Logout failed:", error);
+      localStorage.removeItem("token");
+      navigate("/");
+    }
+  };
+
+  const adminMenu = [
+    {
+      path: "/admin/dashboard",
+      icon: <MdOutlineDashboard />,
+      label: "Dashboard",
+    },
+    { path: "/books", icon: <MdOutlineLibraryBooks />, label: "Books" },
+    { path: "/categories", icon: <MdOutlineCategory />, label: "Categories" },
+    { path: "/authors", icon: <MdOutlineHistoryEdu />, label: "Authors" },
+    { path: "/loans", icon: <MdOutlineBook />, label: "Loans" },
+    { path: "/logs", icon: <MdListAlt />, label: "Activity Log" },
   ];
 
-  return (
-    <div className="flex min-h-full flex-col items-start justify-center bg-white shadow-lg is-drawer-close:w-20 is-drawer-open:w-64">
-      {/* Sidebar content here */}
-      <ul className="menu w-full grow gap-3">
-        <li className="pt-4 pb-2">
-          <div className="flex items-center gap-x-2 hover:bg-white">
-            <img
-              className="w-12 h-12 rounded-full object-cover is-drawer-close:w-10 is-drawer-close:h-10 transition-all duration-300 ring-blue-300 ring-offset-base-100 ring-2 ring-offset-2"
-              src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=faceare&facepad=3&w=688&h=688&q=100"
-              alt="avatar"
-            />
-            <div>
-              <h1 className="text-lg font-semibold font-jakarta capitalize is-drawer-close:hidden">
-                {username}
-              </h1>
+  const librarianMenu = [
+    {
+      path: "/admin/dashboard",
+      icon: <MdOutlineDashboard />,
+      label: "Dashboard",
+    },
+    { path: "/books", icon: <MdOutlineLibraryBooks />, label: "Books" },
+    { path: "/categories", icon: <MdOutlineCategory />, label: "Categories" },
+    { path: "/authors", icon: <MdOutlineHistoryEdu />, label: "Authors" },
+    { path: "/loans", icon: <MdOutlineBook />, label: "Loans" },
+  ];
 
-              <p className="text-md text-gray-500 font-inter is-drawer-close:hidden">
-                {email}
-              </p>
-            </div>
-          </div>
-        </li>
-        {/* List item */}
-        {pages.map((item) => (
-          <li key={item.path} className="px-2">
-            <div
-              className={`px-2 ${location.pathname === item.path ? "bg-blue-300 text-white" : "hover:bg-blue-300 hover:text-white"} transition-all duration-200"`}
-            >
-              <button
-                onClick={() => navigate(item.path)}
-                className="flex items-center justify-start w-full h-11 px-3 is-drawer-close:w-11 is-drawer-close:h-11 is-drawer-close:p-0 is-drawer-close:justify-center is-drawer-close:mx-auto transition-all duration-300"
-              >
-                <item.icon className="w-5 h-5 is-drawer-close:mx-auto" />
-                <span className="font-sans text-md is-drawer-close:hidden ml-3 transition-all duration-300">
-                  {item.label}
-                </span>
-              </button>
-            </div>
-          </li>
+  const memberMenu = [
+    {
+      path: "/member/dashboard",
+      icon: <MdOutlineDashboard />,
+      label: "Dashboard",
+    },
+    { path: "/catalog", icon: <MdOutlineLibraryBooks />, label: "Catalog" },
+    { path: "/my-loans", icon: <MdOutlineBookmark />, label: "My Loans" },
+  ];
+
+  let navItems = [];
+  switch (role) {
+    case "admin":
+      navItems = adminMenu;
+      break;
+    case "librarian":
+      navItems = librarianMenu;
+      break;
+    case "member":
+      navItems = memberMenu;
+      break;
+    default:
+      navItems = adminMenu;
+  }
+
+  return (
+    <aside className="w-64 bg-surface-container-low flex flex-col h-full overflow-y-auto shadow-lg">
+      {/* Header Sidebar: Title sejajar dengan tombol close */}
+      <div className="flex items-center justify-between p-4">
+        <div className="flex flex-col">
+          <span className="text-xl font-bold text-primary font-headline">
+            NusantaraReads
+          </span>
+          <span className="font-headline tracking-[0.05em] uppercase text-[9px] font-semibold text-on-surface-variant">
+            Library Management
+          </span>
+        </div>
+        {/* Tombol close untuk mobile & tablet */}
+        <button
+          onClick={onClose}
+          className="p-1 text-on-surface-variant hover:text-primary transition-colors lg:hidden"
+        >
+          <MdClose size={24} />
+        </button>
+      </div>
+
+      <nav className="flex flex-col gap-1 p-4 pt-4">
+        {navItems.map((item) => (
+          <NavLink
+            key={item.path}
+            to={item.path}
+            onClick={onClose}
+            className={({ isActive }) =>
+              `flex items-center gap-3 py-3 px-4 rounded-lg transition-all font-headline tracking-[0.05em] uppercase text-xs ${
+                isActive
+                  ? "bg-surface-container-lowest text-primary font-bold shadow-sm"
+                  : "text-on-surface-variant hover:text-primary hover:bg-white/50"
+              }`
+            }
+          >
+            <span className="text-lg">{item.icon}</span>
+            <span>{item.label}</span>
+          </NavLink>
         ))}
-      </ul>
-    </div>
+      </nav>
+
+      <div className="mt-auto flex flex-col gap-1 p-4 pt-4 border-t border-outline-variant">
+        <NavLink
+          to="/profile"
+          onClick={onClose}
+          className="flex items-center gap-3 py-3 px-4 rounded-lg text-on-surface-variant hover:text-primary hover:bg-white/50 transition-all"
+        >
+          <span className="text-lg">
+            <MdOutlinePerson />
+          </span>
+          <span className="font-headline tracking-[0.05em] uppercase text-xs">
+            Profile
+          </span>
+        </NavLink>
+        <button
+          onClick={handleLogout}
+          className="flex items-center gap-3 py-3 px-4 rounded-lg text-error hover:bg-error/5 transition-all w-full text-left"
+        >
+          <span className="text-lg">
+            <MdOutlineLogout />
+          </span>
+          <span className="font-headline tracking-[0.05em] uppercase text-xs">
+            Logout
+          </span>
+        </button>
+      </div>
+    </aside>
   );
-}
+};
+
+export default Sidebar;

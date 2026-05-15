@@ -19,3 +19,11 @@ export const registerUser = (data) => {
 export const getMembers = () => {
   return api.get("/members");
 };
+
+export const getTotalUsers = () => {
+  return api.get(`/users/total-users`);
+};
+
+export const getNewUsersToday = () => {
+  return api.get(`/users/new-today`);
+};
